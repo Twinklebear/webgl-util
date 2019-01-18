@@ -1,3 +1,5 @@
+'use strict';
+
 // Various utilities that don't really fit anywhere else
 
 var hexToRGB = function(hex) {

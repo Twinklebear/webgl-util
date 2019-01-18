@@ -1,3 +1,5 @@
+'use strict';
+
 var Shader = function(vertexSrc, fragmentSrc) {
 	var self = this;
 	this.program = compileShader(vertexSrc, fragmentSrc);
@@ -23,7 +25,7 @@ var Shader = function(vertexSrc, fragmentSrc) {
 		});
 	}
 
-	for (unif in this.uniforms) {
+	for (var unif in this.uniforms) {
 		this.uniforms[unif] = gl.getUniformLocation(this.program, unif);
 	}
 }

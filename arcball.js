@@ -1,3 +1,5 @@
+'use strict';
+
 var ArcballCamera = function(center, zoomSpeed, screenDims) {
 	this.zoomSpeed = zoomSpeed;
 	this.invScreen = [1.0 / screenDims[0], 1.0 / screenDims[1]];
