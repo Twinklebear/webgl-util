@@ -1,7 +1,8 @@
 FILES=$(filter-out webgl-util.js, $(wildcard *.js))
 
 webgl-util.js: $(FILES)
-	cat $^ > $@
+	echo "'use strict';" > $@
+	cat $^ >> $@
 
 .PHONY: clean
 clean:
