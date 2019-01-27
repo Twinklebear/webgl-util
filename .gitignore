@@ -2,4 +2,5 @@
 *.raw
 build/
 *.rsf
+webgl-util.js
 
