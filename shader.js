@@ -1,5 +1,3 @@
-'use strict';
-
 var Shader = function(vertexSrc, fragmentSrc) {
 	var self = this;
 	this.program = compileShader(vertexSrc, fragmentSrc);

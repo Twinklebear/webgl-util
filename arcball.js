@@ -1,14 +1,43 @@
-'use strict';
+/* The arcball camera will be placed at the position 'eye', rotating
+ * around the point 'center', with the up vector 'up'. 'screenDims'
+ * should be the dimensions of the canvas or region taking mouse input
+ * so the mouse positions can be normalized into [-1, 1] from the pixel
+ * coordinates.
+ */
+var ArcballCamera = function(eye, center, up, zoomSpeed, screenDims) {
+	var veye = vec3.set(vec3.create(), eye[0], eye[1], eye[2]);
+	var vcenter = vec3.set(vec3.create(), center[0], center[1], center[2]);
+	var vup = vec3.set(vec3.create(), up[0], up[1], up[2]);
+	vec3.normalize(vup, vup);
 
-var ArcballCamera = function(center, zoomSpeed, screenDims) {
+	var zAxis = vec3.sub(vec3.create(), vcenter, veye);
+	var viewDist = vec3.len(zAxis);
+	vec3.normalize(zAxis, zAxis);
+	
+	var xAxis = vec3.cross(vec3.create(), zAxis, vup);
+	vec3.normalize(xAxis, xAxis);
+
+	var yAxis = vec3.cross(vec3.create(), xAxis, zAxis);
+	vec3.normalize(yAxis, yAxis);
+
+	vec3.cross(xAxis, zAxis, yAxis);
+	vec3.normalize(xAxis, xAxis);
+
 	this.zoomSpeed = zoomSpeed;
 	this.invScreen = [1.0 / screenDims[0], 1.0 / screenDims[1]];
 
 	this.centerTranslation = mat4.fromTranslation(mat4.create(), center);
 	mat4.invert(this.centerTranslation, this.centerTranslation);
-	var vt = vec3.set(vec3.create(), 0, 0, -1.0);
+
+	var vt = vec3.set(vec3.create(), 0, 0, -1.0 * viewDist);
 	this.translation = mat4.fromTranslation(mat4.create(), vt);
-	this.rotation = quat.create();
+
+	var rotMat = mat3.fromValues(xAxis[0], xAxis[1], xAxis[2],
+		yAxis[0], yAxis[1], yAxis[2],
+		-zAxis[0], -zAxis[1], -zAxis[2]);
+	mat3.transpose(rotMat, rotMat);
+	this.rotation = quat.fromMat3(quat.create(), rotMat);
+	quat.normalize(this.rotation, this.rotation);
 
 	this.camera = mat4.create();
 	this.invCamera = mat4.create();

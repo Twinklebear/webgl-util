@@ -1,5 +1,3 @@
-'use strict';
-
 var Buffer = function(capacity, dtype) {
 	this.len = 0;
 	this.capacity = capacity;

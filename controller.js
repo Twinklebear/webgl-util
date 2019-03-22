@@ -1,5 +1,3 @@
-'use strict';
-
 /* The controller can register callbacks for various events on a canvas:
  *
  * mousemove: function(prevMouse, curMouse, evt)
