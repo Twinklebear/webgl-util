@@ -3,4 +3,5 @@
 build/
 *.rsf
 webgl-util.js
+webgl-util.min.js
 
