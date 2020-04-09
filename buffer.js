@@ -24,7 +24,7 @@ var Buffer = function(capacity, dtype) {
 
 Buffer.prototype.append = function(buf) {
     if (this.len + buf.length >= this.capacity) {
-        var newCap = Math.floor(this.capacity * 1.5);
+        var newCap = Math.floor(Math.max(this.capacity * 1.5), this.len + buf.length);
         var tmp = new (this.buffer.constructor)(newCap);
         tmp.set(this.buffer);
 
